@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBite - Food Delivery Platform</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login/Registration Screen -->
+        <div id="auth-screen" class="screen active">
+            <header class="app-header">
+                <h1>QuickBite</h1>
+                <p>Food delivery made simple</p>
+            </header>
+            
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+                
+                <div id="login-tab" class="tab-content active">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-role">I am a:</label>
+                            <select id="login-role" required>
+                                <option value="">Select role</option>
+                                <option value="customer">Customer</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="driver">Driver</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+                </div>
+                
+                <div id="register-tab" class="tab-content">
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-name">Full Name</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-role">I am a:</label>
+                            <select id="register-role" required>
+                                <option value="">Select role</option>
+                                <option value="customer">Customer</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="driver">Driver</option>
+                            </select>
+                        </div>
+                        <div id="restaurant-fields" class="role-specific-fields hidden">
+                            <div class="form-group">
+                                <label for="restaurant-name">Restaurant Name</label>
+                                <input type="text" id="restaurant-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="restaurant-address">Restaurant Address</label>
+                                <input type="text" id="restaurant-address">
+                            </div>
+                        </div>
+                        <div id="driver-fields" class="role-specific-fields hidden">
+                            <div class="form-group">
+                                <label for="driver-vehicle">Vehicle Type</label>
+                                <input type="text" id="driver-vehicle" placeholder="e.g., Car, Bike, Scooter">
+                            </div>
+                            <div class="form-group">
+                                <label for="driver-license">License Number</label>
+                                <input type="text" id="driver-license">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Dashboard -->
+        <div id="customer-dashboard" class="screen">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>QuickBite</h1>
+                    <div class="user-info">
+                        <span id="customer-name">Customer</span>
+                        <button id="customer-logout" class="btn-secondary">Logout</button>
+                    </div>
+                </div>
+                <nav class="dashboard-nav">
+                    <button class="nav-btn active" data-section="restaurants">Restaurants</button>
+                    <button class="nav-btn" data-section="cart">Cart (<span id="cart-count">0</span>)</button>
+                    <button class="nav-btn" data-section="orders">My Orders</button>
+                </nav>
+            </header>
+            
+            <main class="dashboard-main">
+                <!-- Restaurants Section -->
+                <section id="restaurants-section" class="dashboard-section active">
+                    <div class="section-header">
+                        <h2>Restaurants</h2>
+                        <div class="search-bar">
+                            <input type="text" id="restaurant-search" placeholder="Search restaurants...">
+                        </div>
+                    </div>
+                    <div id="restaurants-list" class="cards-container">
+                        <!-- Restaurants will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Restaurant Menu Section -->
+                <section id="menu-section" class="dashboard-section">
+                    <div class="section-header">
+                        <button id="back-to-restaurants" class="btn-secondary">← Back to Restaurants</button>
+                        <h2 id="restaurant-menu-name">Restaurant Menu</h2>
+                    </div>
+                    <div id="menu-items" class="cards-container">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Cart Section -->
+                <section id="cart-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Your Cart</h2>
+                    </div>
+                    <div id="cart-items">
+                        <!-- Cart items will be populated by JavaScript -->
+                    </div>
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="cart-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee:</span>
+                            <span id="cart-delivery">$2.99</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="cart-total">$2.99</span>
+                        </div>
+                        <div class="payment-method">
+                            <h3>Payment Method</h3>
+                            <div class="payment-options">
+                                <label>
+                                    <input type="radio" name="payment" value="cash" checked>
+                                    <span>Cash on Delivery</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="payment" value="card">
+                                    <span>Credit/Debit Card</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button id="checkout-btn" class="btn-primary" disabled>Proceed to Checkout</button>
+                    </div>
+                </section>
+                
+                <!-- Orders Section -->
+                <section id="orders-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>My Orders</h2>
+                    </div>
+                    <div id="orders-list" class="cards-container">
+                        <!-- Orders will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Order Tracking Section -->
+                <section id="tracking-section" class="dashboard-section">
+                    <div class="section-header">
+                        <button id="back-to-orders" class="btn-secondary">← Back to Orders</button>
+                        <h2>Order Tracking</h2>
+                    </div>
+                    <div id="order-details">
+                        <!-- Order details will be populated by JavaScript -->
+                    </div>
+                    <div class="tracking-container">
+                        <div class="tracking-steps">
+                            <div class="step active">
+                                <div class="step-icon">📦</div>
+                                <div class="step-label">Order Placed</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">👨‍🍳</div>
+                                <div class="step-label">Preparing</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">🚗</div>
+                                <div class="step-label">On the Way</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">✅</div>
+                                <div class="step-label">Delivered</div>
+                            </div>
+                        </div>
+                        <div id="tracking-map" class="tracking-map">
+                            <div class="map-placeholder">
+                                <p>Live tracking will appear here</p>
+                                <p>Driver location: <span id="driver-location">Not available</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        
+        <!-- Restaurant Dashboard -->
+        <div id="restaurant-dashboard" class="screen">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>QuickBite Restaurant</h1>
+                    <div class="user-info">
+                        <span id="restaurant-name-display">Restaurant</span>
+                        <button id="restaurant-logout" class="btn-secondary">Logout</button>
+                    </div>
+                </div>
+                <nav class="dashboard-nav">
+                    <button class="nav-btn active" data-section="orders">Orders</button>
+                    <button class="nav-btn" data-section="menu">Menu Management</button>
+                    <button class="nav-btn" data-section="sales">Sales Summary</button>
+                </nav>
+            </header>
+            
+            <main class="dashboard-main">
+                <!-- Orders Section -->
+                <section id="restaurant-orders-section" class="dashboard-section active">
+                    <div class="section-header">
+                        <h2>Current Orders</h2>
+                    </div>
+                    <div id="restaurant-orders-list" class="cards-container">
+                        <!-- Orders will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Menu Management Section -->
+                <section id="menu-management-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Menu Management</h2>
+                        <button id="add-menu-item" class="btn-primary">Add Item</button>
+                    </div>
+                    <div id="menu-management-list" class="cards-container">
+                        <!-- Menu items will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Sales Summary Section -->
+                <section id="sales-summary-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Sales Summary</h2>
+                        <div class="date-filter">
+                            <select id="sales-period">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sales-stats">
+                        <div class="stat-card">
+                            <h3>Total Orders</h3>
+                            <p id="total-orders">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Revenue</h3>
+                            <p id="total-revenue">$0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Average Order Value</h3>
+                            <p id="avg-order-value">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="recent-orders">
+                        <h3>Recent Orders</h3>
+                        <div id="recent-orders-list">
+                            <!-- Recent orders will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        
+        <!-- Driver Dashboard -->
+        <div id="driver-dashboard" class="screen">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <h1>QuickBite Driver</h1>
+                    <div class="user-info">
+                        <span id="driver-name-display">Driver</span>
+                        <button id="driver-logout" class="btn-secondary">Logout</button>
+                    </div>
+                </div>
+                <nav class="dashboard-nav">
+                    <button class="nav-btn active" data-section="deliveries">Available Deliveries</button>
+                    <button class="nav-btn" data-section="active">Active Delivery</button>
+                    <button class="nav-btn" data-section="earnings">My Earnings</button>
+                </nav>
+            </header>
+            
+            <main class="dashboard-main">
+                <!-- Available Deliveries Section -->
+                <section id="deliveries-section" class="dashboard-section active">
+                    <div class="section-header">
+                        <h2>Available Deliveries</h2>
+                    </div>
+                    <div id="deliveries-list" class="cards-container">
+                        <!-- Deliveries will be populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Active Delivery Section -->
+                <section id="active-delivery-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>Active Delivery</h2>
+                    </div>
+                    <div id="active-delivery-details">
+                        <!-- Active delivery details will be populated by JavaScript -->
+                    </div>
+                    <div class="delivery-actions">
+                        <button id="pickup-order" class="btn-primary">Picked Up</button>
+                        <button id="deliver-order" class="btn-primary" disabled>Mark as Delivered</button>
+                    </div>
+                    <div class="tracking-map">
+                        <div class="map-placeholder">
+                            <p>Delivery route will appear here</p>
+                            <p>Customer location: <span id="customer-location">Not available</span></p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Earnings Section -->
+                <section id="earnings-section" class="dashboard-section">
+                    <div class="section-header">
+                        <h2>My Earnings</h2>
+                        <div class="date-filter">
+                            <select id="earnings-period">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="earnings-stats">
+                        <div class="stat-card">
+                            <h3>Total Deliveries</h3>
+                            <p id="total-deliveries">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Earnings</h3>
+                            <p id="total-earnings">$0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Average per Delivery</h3>
+                            <p id="avg-delivery-earnings">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="earnings-history">
+                        <h3>Recent Deliveries</h3>
+                        <div id="earnings-history-list">
+                            <!-- Earnings history will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal Title</h3>
+                <button id="close-modal" class="btn-close">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/customer.js"></script>
+    <script src="scripts/restaurant.js"></script>
+    <script src="scripts/driver.js"></script>
+</body>
+</html>
