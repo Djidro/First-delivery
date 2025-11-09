@@ -651,3 +651,97 @@ body {
         margin-bottom: 0;
     }
 }
+/* Restaurant and Driver specific styles */
+.order-items {
+    margin: 15px 0;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.availability {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.availability.available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.availability.unavailable {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.info-section {
+    margin: 15px 0;
+}
+
+.info-section h4 {
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+.delivery-actions {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.recent-order, .earning-record {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.recent-order-info, .earning-info {
+    flex: 1;
+}
+
+.recent-order-amount, .earning-amount {
+    font-weight: 600;
+    color: #28a745;
+}
+
+.no-results, .no-orders, .no-items, .no-deliveries, .no-active-delivery {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Animation for messages */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
